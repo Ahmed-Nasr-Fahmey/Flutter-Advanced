@@ -6,6 +6,8 @@ import 'routes.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
+    // like extra data in goRouter
+    final arguments = settings.arguments;
     switch (settings.name) {
       case Routes.onBoardingScreen:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
