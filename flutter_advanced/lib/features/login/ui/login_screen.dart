@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced/core/theme/color_manager.dart';
-import 'package:flutter_advanced/core/widgets/app_text_form_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/helpers/spacing.dart';
 import '../../../core/theme/text_styles.dart';
 import '../../../core/widgets/app_text_button.dart';
+import '../logic/cubit/login_cubit.dart';
 import 'widgets/dont_have_account_text.dart';
+import 'widgets/email_and_password.dart';
+import 'widgets/login_bloc_listener.dart';
 import 'widgets/terms_and_conditions.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,9 +19,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  bool isObsecureText = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,59 +36,39 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyles.font14GrayRegular,
                 ),
                 verticalSpace(36),
-                Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      AppTextFormField(
-                        hintText: 'Eamil',
-                        validator: (value) {},
-                      ),
-                      verticalSpace(16),
-                      AppTextFormField(
-                        hintText: 'Password',
-                        validator: (value) {},
-                        isObscureText: isObsecureText,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            isObsecureText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: ColorsManager.mainBlue,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isObsecureText = !isObsecureText;
-                            });
-                          },
-                        ),
-                      ),
-                      verticalSpace(24),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyles.font13BlueRegular,
-                        ),
-                      ),
-                      verticalSpace(40),
-                      AppTextButton(
-                        buttonText: "Login",
-                        textStyle: TextStyles.font16WhiteSemiBold,
-                        onPressed: () {},
-                      ),
-                      verticalSpace(16),
-                      const TermsAndConditionsText(),
-                      verticalSpace(60),
-                      const DontHaveAccountText(),
-                    ],
+                const EmailAndPassword(),
+                verticalSpace(24),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyles.font13BlueRegular,
                   ),
                 ),
+                verticalSpace(40),
+                AppTextButton(
+                  buttonText: "Login",
+                  textStyle: TextStyles.font16WhiteSemiBold,
+                  onPressed: () {
+                    validateThenDoLogin(context);
+                  },
+                ),
+                verticalSpace(16),
+                const TermsAndConditionsText(),
+                verticalSpace(60),
+                const DontHaveAccountText(),
+                LoginBlocListener(),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void validateThenDoLogin(BuildContext context) {
+    if (context.read<LoginCubit>().formKey.currentState!.validate()) {
+      context.read<LoginCubit>().login();
+    }
   }
 }
