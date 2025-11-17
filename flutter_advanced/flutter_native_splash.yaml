@@ -7,3 +7,7 @@ flutter_native_splash:
   fullscreen: true
   #! ANDROID 12+ configuration:
   android_12:
+    # Background color of your splash screen
+    color: "#ffffff"
+    # Background image of your splash screen
+    image: assets/images/splash_android12_logo.png
