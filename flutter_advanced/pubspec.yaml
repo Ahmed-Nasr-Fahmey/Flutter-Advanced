@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   # State management
+  bloc: ^9.1.0
   flutter_bloc: ^9.1.1
   
   # Dependency injection
@@ -64,6 +65,9 @@ dependencies:
 
   # Splash screen
   flutter_native_splash: ^2.4.7
+
+  # Code generator
+  build_runner: ^2.10.3
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
   flutter_svg: ^2.2.2
