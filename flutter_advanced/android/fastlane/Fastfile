@@ -13,6 +13,6 @@ platform :android do
             android_artifact_path: "../build/app/outputs/flutter-apk/app-production-release.apk",
             testers: "ahmed.nasr.fahmey@gmail.com",
             release_notes: "First Release using Fastlane Plugin for Android Firebase App Distribution"
-        )
+        ) 
   end
 end
